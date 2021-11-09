@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home"
+    app:startDestination="@id/spacexFragment">
+
+    <fragment
+        android:id="@+id/spacexFragment"
+        android:name="kaan.tabcorp.ui.news.SpaceXFragment"
+        android:label="@string/first_fragment_label"
+        tools:layout="@layout/fragment_spacex_flights">
+    </fragment>
+
+</navigation>
