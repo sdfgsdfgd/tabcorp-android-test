@@ -19,7 +19,7 @@
 <!--            app:itemLayoutProvider="@{viewModel.assetsLayoutProvider}"-->
 <!--            app:items="@{viewModel.assets}"-->
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/newsList"
+            android:id="@+id/launchesList"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"

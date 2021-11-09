@@ -18,7 +18,6 @@
         android:clickable="true"
         android:focusable="true"
         android:foreground="?selectableItemBackground">
-
         <!--   android:onClick="@{() -> item.onClick()}"    -->
 
 

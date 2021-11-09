@@ -1,4 +1,4 @@
-package kaan.tabcorp.domain
+package kaan.tabcorp.domain.flights
 
 import android.util.Log
 import kaan.tabcorp.data.BFFApi
@@ -8,19 +8,19 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class FlightsRepository @Inject constructor(private val bffApi: BFFApi) {
+class SpacexRepository @Inject constructor(private val bffApi: BFFApi) {
 //    fun flow(): StateFlow<Result<Any>> {
 //        return flow
 //    }
 
-    suspend fun getFlights() = withContext(Dispatchers.IO) {
+    suspend fun getLaunches() = withContext(Dispatchers.IO) {
 
         try {
             Log.d("XXX", "getFlights() ....... [START]")
 
-            val flightsResponse = bffApi.getFlights()
+            val flightsResponse = bffApi.getLaunches()
 
-            Log.d("XXX", "flightsResponse: $flightsResponse")
+            Log.d("XXX", "flightsResponse: ${flightsResponse.size}")
             Log.d("XXX", "getFlights() ....... [END]")
         } catch (e: Throwable) {
             Log.d("XXX", "ERROR: $e")

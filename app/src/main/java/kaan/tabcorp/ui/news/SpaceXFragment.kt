@@ -1,8 +1,6 @@
 package kaan.tabcorp.ui.news
 
-import android.content.Intent
 import android.content.res.Configuration
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +14,7 @@ import kaan.tabcorp.R
 import kaan.tabcorp.databinding.FragmentSpacexFlightsBinding
 
 /**
- * News grid/recyclerview [Fragment] subclass as the default destination in the navigation.
+ *  SpaceX grid/recyclerview [Fragment] subclass as the default destination in the navigation.
  */
 open class SpaceXFragment : Fragment() {
 
@@ -32,16 +30,16 @@ open class SpaceXFragment : Fragment() {
         binding = FragmentSpacexFlightsBinding.inflate(inflater, container, false)
 
         if (activity?.resources?.configuration?.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            binding.newsList.layoutManager = LinearLayoutManager(
+            binding.launchesList.layoutManager = LinearLayoutManager(
                 requireContext(),
                 LinearLayoutManager.HORIZONTAL,
                 false
             )
             viewModel.setPortraitOrientation(true)
 
-            PagerSnapHelper().attachToRecyclerView(binding.newsList)
+            PagerSnapHelper().attachToRecyclerView(binding.launchesList)
         } else {
-            binding.newsList.layoutManager = GridLayoutManager(requireContext(), 2)
+            binding.launchesList.layoutManager = GridLayoutManager(requireContext(), 2)
 
             viewModel.setPortraitOrientation(false)
         }
@@ -54,9 +52,5 @@ open class SpaceXFragment : Fragment() {
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
-
-        viewModel.navigateToWebview.observe(viewLifecycleOwner) { url ->
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
-        }
     }
 }

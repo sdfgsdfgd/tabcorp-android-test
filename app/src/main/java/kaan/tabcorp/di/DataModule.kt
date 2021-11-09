@@ -19,7 +19,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object DataModule {
-    private const val BASE_URL = "https://api.spacexdata.com/v3/"
+    private const val BASE_URL = "https://api.spacexdata.com/"
 
     @Singleton
     @Provides
@@ -46,7 +46,7 @@ object DataModule {
     ): Retrofit = RetrofitProvider(
         BASE_URL,
         converterFactory,
-        interceptors.toList()
+        listOf() //interceptors.toList()
     ).retrofit
 
     @Provides
