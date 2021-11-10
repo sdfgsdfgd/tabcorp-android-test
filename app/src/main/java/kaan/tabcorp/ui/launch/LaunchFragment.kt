@@ -1,7 +1,6 @@
 package kaan.tabcorp.ui.launch
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,13 +39,14 @@ class LaunchFragment : Fragment() {
         viewModel.queryRocketDetails(argLaunchItem.rocketId)
         viewModel.queryLaunchDetails(argLaunchItem.flightNumber.toString())
 
+        // 1st Endpoint - One Rocket Query results
         viewModel.rocketDetails.observe(viewLifecycleOwner) {
             binding.rocketHeadline.text = it.name
         }
 
+        // 2nd Endpoint - One Launch Query results
         viewModel.launchDetails.observe(viewLifecycleOwner) {
             binding.launchDetails.text = it?.details.orEmpty()
-            // XXX   binding. --------------- you're here
         }
     }
 }
