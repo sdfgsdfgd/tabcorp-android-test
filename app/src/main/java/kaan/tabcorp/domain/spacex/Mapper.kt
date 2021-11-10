@@ -14,6 +14,7 @@ fun List<LaunchResponse>.mapToLaunchItems(
     LaunchItem(
         response.id ?: kotlin.math.abs(Math.random().hashCode()).toString(),
         response.rocket ?: "",
+        response.name.orEmpty(),
         response.flight_number,
         response.details ?: "",
         response.date_utc?.let { formatting.parse(it) },

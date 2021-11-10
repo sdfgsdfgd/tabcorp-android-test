@@ -11,16 +11,12 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import kaan.tabcorp.R
 import kaan.tabcorp.databinding.FragmentSpacexFlightsBinding
-import kotlinx.coroutines.launch
 
 /**
  *  SpaceX
@@ -62,14 +58,21 @@ class SpaceXFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         viewModel.filterSuccessfulLaunches.observe(viewLifecycleOwner) {
-            if (it == false) {
-                lifecycleScope.launch {
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        binding.launchesList.layoutManager?.smoothScrollToPosition(binding.launchesList, RecyclerView.State(), 0)
-                    }, 150)
-                }
-            }
+            Log.d("XXXXXX", "-----------------------------------")
+            Handler(Looper.getMainLooper()).postDelayed({
+                binding.launchesList.layoutManager?.scrollToPosition(0)
+            }, 125)
+            binding.launchesList.layoutManager?.scrollToPosition(0)
+
         }
+
+        viewModel.sortClicked.observe(viewLifecycleOwner) {
+            Log.d("XXXXXX", "-----------------------------------")
+            Handler(Looper.getMainLooper()).postDelayed({
+                binding.launchesList.layoutManager?.scrollToPosition(0)
+            }, 125)
+        }
+
         viewModel.navigate.observe(viewLifecycleOwner) {
             findNavController().navigate(SpaceXFragmentDirections.actionSpacexFragmentToLaunchFragment(it))
         }

@@ -1,9 +1,8 @@
-package au.gov.vic.ptv.framework.databinding.recyclerview
+package kaan.tabcorp.bindings.recyclerview
 
 import androidx.annotation.LayoutRes
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.DiffUtil
-import kaan.tabcorp.bindings.recyclerview.DataBoundListAdapter
 
 /**
  * A RecyclerView [ListAdapter] for lists with items where different items can have different layouts.
@@ -66,10 +65,11 @@ import kaan.tabcorp.bindings.recyclerview.DataBoundListAdapter
  *
  */
 class MultiDataBoundListAdapter<T>(
-        items: LiveData<List<T>>,
-        private val itemLayoutProvider: (T) -> Int,
-        itemDiff: DiffUtil.ItemCallback<T>
-) : DataBoundListAdapter<T>(items, itemDiff) {
+    items: LiveData<List<T>>,
+    private val itemLayoutProvider: (T) -> Int,
+    itemDiff: DiffUtil.ItemCallback<T>,
+    onItemsUpdated: (() -> Unit)?
+) : DataBoundListAdapter<T>(items, itemDiff, onItemsUpdated) {
 
     @LayoutRes
     override fun getItemLayoutId(position: Int): Int = itemLayoutProvider(getItem(position))
