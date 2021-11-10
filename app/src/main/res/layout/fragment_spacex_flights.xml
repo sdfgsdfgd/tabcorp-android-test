@@ -7,21 +7,76 @@
 
         <variable
             name="viewModel"
-            type="kaan.tabcorp.ui.news.SpaceXViewModel" />
+            type="kaan.tabcorp.ui.spacex.SpaceXViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="kaan.tabcorp.ui.news.SpaceXFragment">
+        tools:context="kaan.tabcorp.ui.spacex.SpaceXFragment">
 
-<!--            app:itemDiff="@{viewModel.assetsDiff}"-->
-<!--            app:itemLayoutProvider="@{viewModel.assetsLayoutProvider}"-->
-<!--            app:items="@{viewModel.assets}"-->
+        <View
+            android:id="@+id/selector_filter_bg"
+            style="@style/SelectableItemBackground"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:clickable="true"
+            android:elevation="14dp"
+            android:focusable="true"
+            android:onClick="@{() -> viewModel.onFilterClicked()}"
+            android:shadowColor="@color/gold"
+            app:layout_constraintBottom_toBottomOf="@id/cardview"
+            app:layout_constraintEnd_toEndOf="@id/cardview"
+            app:layout_constraintStart_toStartOf="@id/cardview"
+            app:layout_constraintTop_toTopOf="@id/cardview" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardview"
+            android:layout_width="148dp"
+            android:layout_height="46dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="12dp"
+            android:clickable="true"
+            android:elevation="14dp"
+            android:focusable="true"
+            app:cardCornerRadius="14dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageButton
+                android:id="@+id/img_thumbnail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="left"
+                android:background="@drawable/bg_dark_wood"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:scaleType="fitXY"
+                android:text="sfasdsdfsdf"
+                android:textColor="@android:color/holo_green_dark" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:drawableTint="@android:color/holo_green_dark"
+                android:fontFamily="cursive"
+                android:gravity="center"
+                android:text="Filter by Success"
+                android:textColor="@android:color/holo_green_dark" />
+
+        </androidx.cardview.widget.CardView>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/launchesList"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            app:itemDiff="@{viewModel.assetsDiff}"
+            app:itemLayoutProvider="@{viewModel.assetsLayoutProvider}"
+            app:items="@{viewModel.assets}"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

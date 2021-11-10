@@ -7,98 +7,78 @@
 
         <variable
             name="item"
-            type="kaan.tabcorp.data.models.SomeItem" />
+            type="kaan.tabcorp.data.models.LaunchItem" />
     </data>
 
-    <ScrollView
-        android:id="@+id/scroll_layout_portrait"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clickable="false"
-        android:fillViewport="true"
-        android:focusable="false">
-<!--        android:contentDescription="@{item.tabletHeadline}"-->
+        android:layout_height="wrap_content"
+        android:paddingVertical="16dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/main_layout_portrait"
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/img_thumbnail"
+            imageUrl="@{item.thumbnailImgUrl}"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?selectableItemBackground"
-            >
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_fortune_cat" />
 
-<!--            android:onClick="@{() -> item.onClick()}"-->
+        <TextView
+            android:id="@+id/textview_date"
+            date="@{item.date}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="9dp"
+            android:fontFamily="sans-serif-condensed"
+            android:maxLines="2"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/img_thumbnail"
+            app:layout_constraintTop_toTopOf="@id/img_thumbnail"
+            tools:text="21 January 1990" />
 
-<!--                categories="@{item.categories}"-->
-            <LinearLayout
-                android:id="@+id/newsCategories"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="24dp"
-                android:gravity="center_horizontal"
-                android:orientation="vertical"
-                android:textColor="@color/black"
-                app:layout_constraintBottom_toTopOf="@id/newsHeader"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/textview_success"
+            successText="@{item.success}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="9dp"
+            android:fontFamily="sans-serif-condensed"
+            android:maxLines="2"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@id/img_thumbnail"
+            app:layout_constraintTop_toBottomOf="@id/textview_date"
+            tools:text="FAIL" />
 
-<!--                android:text="@{item.headline}"-->
-            <TextView
-                android:id="@+id/newsHeader"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="30dp"
-                android:layout_marginTop="12dp"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="44sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@id/newsImagePortrait"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/newsCategories"
-                tools:text="Pork, fennel and sage ragu with polenta" />
+        <ImageView
+            android:id="@+id/img_success"
+            imageSuccess="@{item.success}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:layout_constraintBottom_toBottomOf="@id/textview_success"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/textview_success"
+            tools:src="@drawable/ic_fail" />
 
-<!--                imageUrl="@{item.relatedImages[0].url}"-->
-            <ImageView
-                android:id="@+id/newsImagePortrait"
-                android:layout_width="0dp"
-                android:layout_height="250dp"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="18dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/newsHeader"
-                tools:src="@drawable/ic_launcher_background" />
-
-<!--                android:text="@{item.theAbstract}"-->
-            <TextView
-                android:id="@+id/newsAbstract"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="6dp"
-                android:textSize="18sp"
-                android:textStyle="italic|bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/newsImagePortrait"
-                tools:text="Even as the outgoing President broods over his second impeachment last week and the election he continues to falsely insist he won, his aides are at work to establish a Trump fiefdom in the Sunshine State." />
-
-<!--                android:text="@{item.byLine}"-->
-            <TextView
-                android:id="@+id/byLine"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="6dp"
-                android:textSize="14sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/newsAbstract"
-                tools:text="by John Smith" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+        <TextView
+            android:id="@+id/textview_description"
+            text="@{item.title}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="9dp"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif-condensed"
+            android:maxLines="5"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/img_thumbnail"
+            tools:text="Engine failure at 33 seconds and loss of vehicle" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

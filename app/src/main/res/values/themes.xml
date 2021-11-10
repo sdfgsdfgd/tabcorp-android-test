@@ -24,4 +24,18 @@
     <style name="Theme.Tabcorp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.Tabcorp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+
+    // Gold Color Selection Ripples
+    <style name="SelectableItemTheme">
+        <item name="colorControlHighlight">#e6b800</item>
+    </style>
+
+    <style name="SelectableItemBackground">
+        <item name="android:theme">@style/SelectableItemTheme</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+    </style>
+
+
 </resources>

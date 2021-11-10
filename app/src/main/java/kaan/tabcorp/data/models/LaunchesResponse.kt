@@ -13,6 +13,7 @@ data class LaunchesResponse(
     val failures: List<Any>?,
     val fairings: Any?,
     val flight_number: Int?,
+    val links: Links,
     val id: String?,
     val launchpad: String?,
     val name: String?,

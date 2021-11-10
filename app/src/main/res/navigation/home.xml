@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/spacexFragment"
-        android:name="kaan.tabcorp.ui.news.SpaceXFragment"
+        android:name="kaan.tabcorp.ui.spacex.SpaceXFragment"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_spacex_flights">
     </fragment>

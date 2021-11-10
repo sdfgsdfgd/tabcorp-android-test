@@ -16,8 +16,12 @@
     <string name="recipe_header">RECIPE</string>
 
     <string name="bullet_point"><![CDATA[>]]></string>
-
-
+    <string name="launch_empty_description">-</string>
+    <string name="launch_no_description">No description</string>
+    <string name="launch_text_success">SUCCESS</string>
+    <string name="launch_text_unknown">Unknown</string>
+    <string name="launch_text_fail">FAIL</string>
+    <string name="launch_text_date_unknown">Unknown date</string>
 
 
 </resources>

@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="kaan.tabcorp.data.models.SomeItem" />
+            type="kaan.tabcorp.data.models.LaunchItem" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

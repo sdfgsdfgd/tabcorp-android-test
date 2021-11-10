@@ -1,4 +1,4 @@
-package kaan.tabcorp.ui.news
+package kaan.tabcorp.ui.spacex
 
 import android.content.res.Configuration
 import android.os.Bundle
@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.PagerSnapHelper
 import kaan.tabcorp.R
 import kaan.tabcorp.databinding.FragmentSpacexFlightsBinding
 
@@ -17,7 +16,6 @@ import kaan.tabcorp.databinding.FragmentSpacexFlightsBinding
  *  SpaceX grid/recyclerview [Fragment] subclass as the default destination in the navigation.
  */
 open class SpaceXFragment : Fragment() {
-
     private lateinit var binding: FragmentSpacexFlightsBinding
 
     private val viewModel: SpaceXViewModel by hiltNavGraphViewModels(R.id.spacexFragment)
@@ -32,12 +30,10 @@ open class SpaceXFragment : Fragment() {
         if (activity?.resources?.configuration?.orientation == Configuration.ORIENTATION_PORTRAIT) {
             binding.launchesList.layoutManager = LinearLayoutManager(
                 requireContext(),
-                LinearLayoutManager.HORIZONTAL,
+                LinearLayoutManager.VERTICAL,
                 false
             )
             viewModel.setPortraitOrientation(true)
-
-            PagerSnapHelper().attachToRecyclerView(binding.launchesList)
         } else {
             binding.launchesList.layoutManager = GridLayoutManager(requireContext(), 2)
 
@@ -52,5 +48,9 @@ open class SpaceXFragment : Fragment() {
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+
+        viewModel.launches.observe(viewLifecycleOwner) {
+
+        }
     }
 }
