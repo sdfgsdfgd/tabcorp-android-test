@@ -10,19 +10,6 @@ import androidx.recyclerview.widget.DiffUtil;
 
 import java.util.List;
 
-/**
- * An implementation of {@link BaseDataBoundAdapter} that uses LiveData List as the item storage.
- *
- * A reference implementation for an adapter that wants to use data binding "the right way". It
- * works with {@link DataBoundViewHolder}.
- * <p>
- * This class uses layout id as the item type.
- * <p>
- * It can be used for both single type lists and multiple type lists.
- *
- * Created by Alex Chiviliov on 2019-07-26.
- */
-
 public abstract class DataBoundListAdapter<T>
         extends BaseDataBoundAdapter<T> {
 

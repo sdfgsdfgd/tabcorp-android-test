@@ -2,6 +2,8 @@ package kaan.tabcorp.bindings.recyclerview
 
 import androidx.annotation.LayoutRes
 import androidx.databinding.ObservableList
+import androidx.lifecycle.LiveData
+import androidx.recyclerview.widget.DiffUtil
 
 /**
  * A RecyclerView [Adapter] for lists with items where different items can have different layouts.
@@ -57,7 +59,7 @@ import androidx.databinding.ObservableList
  *     app:itemIdProvider="@{viewModel.accountIdProvider}" />
  * ```
  *
- * Created by Alex Chiviliov on 2019-08-08.
+ * Created by Kaan Osmanagaoglu on 2019-08-08.
  *
  */
 class MultiDataBoundObservableListAdapter<T>(
@@ -65,6 +67,17 @@ class MultiDataBoundObservableListAdapter<T>(
         private val itemLayoutProvider: (T) -> Int,
         itemIdProvider: ((T) -> Long)? = null
 ) : DataBoundObservableListAdapter<T>(items, itemIdProvider) {
+
+    @LayoutRes
+    override fun getItemLayoutId(position: Int): Int = itemLayoutProvider(getItem(position))
+}
+
+class MultiDataBoundListAdapter<T>(
+    items: LiveData<List<T>>,
+    private val itemLayoutProvider: (T) -> Int,
+    itemDiff: DiffUtil.ItemCallback<T>,
+    onItemsUpdated: (() -> Unit)?
+) : DataBoundListAdapter<T>(items, itemDiff, onItemsUpdated) {
 
     @LayoutRes
     override fun getItemLayoutId(position: Int): Int = itemLayoutProvider(getItem(position))

@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.DiffUtil
 /**
  * The DiffUtil callback that treats all items as different.
  *
- * Created by Alex Chiviliov on 2019-07-26.
+ * Created by Kaan Osmanagaoglu on 2019-07-26.
  *
  */
 class NegativeDiffCallback<T> : DiffUtil.ItemCallback<T>() {

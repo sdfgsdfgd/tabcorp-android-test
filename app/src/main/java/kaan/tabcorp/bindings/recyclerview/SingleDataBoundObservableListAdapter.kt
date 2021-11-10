@@ -4,9 +4,9 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.ObservableList
 
 class SingleDataBoundObservableListAdapter<T>(
-        items: ObservableList<T>,
-        @LayoutRes private val layoutId: Int,
-        itemIdProvider: ((T) -> Long)? = null
+    items: ObservableList<T>,
+    @LayoutRes private val layoutId: Int,
+    itemIdProvider: ((T) -> Long)? = null
 ) : DataBoundObservableListAdapter<T>(items, itemIdProvider) {
 
     @LayoutRes
