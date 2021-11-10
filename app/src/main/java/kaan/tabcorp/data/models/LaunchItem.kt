@@ -10,5 +10,6 @@ class LaunchItem(
     val title: String,
     val date: Date?,
     val success: Boolean?,
-    val thumbnailImgUrl: String? // For displaying the thumbnail image of spacex launch badges with Picasso
+    val thumbnailImgUrl: String?, // For displaying the thumbnail image of spacex launch badges with Picasso
+    val onClickCallback: (item: LaunchItem) -> Unit
 )

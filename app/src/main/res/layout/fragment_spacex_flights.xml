@@ -73,6 +73,8 @@
             android:id="@+id/launchesList"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:clipToPadding="false"
+            android:clipChildren="false"
             android:layout_marginTop="16dp"
             app:itemDiff="@{viewModel.assetsDiff}"
             app:itemLayoutProvider="@{viewModel.assetsLayoutProvider}"

@@ -24,24 +24,21 @@ class SpacexRepository @Inject constructor(private val bffApi: BFFApi) {
                 _launches.value.filterNot { it.success != true }
             else
                 _launchesAll.value
-
-
-        Log.d("XXX", "_launchesAll contain fails ? [ ${_launchesAll.value.any { it.success == false}} ]")
-        Log.d("XXX", "_launches contain fails ? [ ${_launches.value.any { it.success == false}} ]")
-        Log.d("XXX", "launches contain fails ? [ ${launches.value.any { it.success == false}} ]")
     }
 
-    suspend fun getLaunches() = withContext(Dispatchers.IO) {
+    suspend fun getLaunches(onLaunchClick: (input: LaunchItem) -> Unit) = withContext(Dispatchers.IO) {
         try {
-            _launchesAll.value = bffApi.getLaunches().mapToLaunchItems(sf).sortedBy { it.date }
+            _launchesAll.value = bffApi.getLaunches().mapToLaunchItems(sf, onLaunchClick).sortedBy { it.date }
             _launches.value = _launchesAll.value.toMutableList()
         } catch (e: Exception) {
             Log.d("XXX", "Error retrieving launches: $e")
         }
 
-        _launches.value.forEach {
-            Log.d("XXX", "----> [${it.id}]")
-        }
+
+
+//        _launches.value.forEach {
+//            Log.d("XXX", "----> [${it.id}]")
+//        }
     }
 
     companion object {

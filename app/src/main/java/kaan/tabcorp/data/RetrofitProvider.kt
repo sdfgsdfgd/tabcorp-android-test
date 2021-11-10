@@ -37,30 +37,3 @@ class RetrofitProvider(
     }
 
 }
-
-//    private fun OkHttpClient.Builder.addCertificates() {
-//        if (!domain.certificate.enablePinning) {
-//            return
-//        }
-//        val certificate = domain.certificate
-//        val certificatePinner =
-//            with(CertificatePinner.Builder()) {
-//                certificate.certificates.forEach { entry ->
-//                    entry.value.forEach {
-//                        add(entry.key, it)
-//                    }
-//                }
-//                build()
-//            }
-//        this.certificatePinner(certificatePinner)
-//    }
-
-//    private fun OkHttpClient.Builder.addDefaultHeaders(domain: Domain) {
-//        addInterceptor { chain: Interceptor.Chain ->
-//            val builder = chain.request().newBuilder()
-//            domain.defaultHeaders.forEach {
-//                builder.addHeader(it.key, it.value)
-//            }
-//            chain.proceed(builder.build())
-//        }
-//    }

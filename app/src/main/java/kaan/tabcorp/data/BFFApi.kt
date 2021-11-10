@@ -13,7 +13,5 @@ interface BFFApi {
     companion object {
         private const val ENDPOINT_LAUNCHES: String = "v5/launches"
         private const val ENDPOINT_LAUNCH_NEXT: String = "launches/next"
-
-
     }
 }

@@ -13,7 +13,24 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:clipChildren="false"
         android:paddingVertical="16dp">
+
+        <View
+            android:id="@+id/selector_filter_bg"
+            style="@style/SelectableItemBackground"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:clickable="true"
+            android:elevation="14dp"
+            android:focusable="true"
+            android:onClick="@{() -> item.onClickCallback.invoke(item)}"
+            android:shadowColor="@color/gold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/img_thumbnail"

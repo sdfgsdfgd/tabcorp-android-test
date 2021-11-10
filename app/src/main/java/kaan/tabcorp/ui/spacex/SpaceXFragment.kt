@@ -4,23 +4,30 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.NavHostFragment.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import dagger.hilt.android.AndroidEntryPoint
 import kaan.tabcorp.R
 import kaan.tabcorp.databinding.FragmentSpacexFlightsBinding
 import kotlinx.coroutines.launch
 
 /**
- *  SpaceX grid/recyclerview [Fragment] subclass as the default destination in the navigation.
+ *  SpaceX
  */
-open class SpaceXFragment : Fragment() {
+
+@AndroidEntryPoint
+class SpaceXFragment : Fragment() {
     private lateinit var binding: FragmentSpacexFlightsBinding
 
     private val viewModel: SpaceXViewModel by hiltNavGraphViewModels(R.id.spacexFragment)
@@ -30,7 +37,7 @@ open class SpaceXFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentSpacexFlightsBinding.inflate(inflater, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_spacex_flights, container, false)
 
         if (activity?.resources?.configuration?.orientation == Configuration.ORIENTATION_PORTRAIT) {
             binding.launchesList.layoutManager = LinearLayoutManager(
@@ -58,10 +65,15 @@ open class SpaceXFragment : Fragment() {
             if (!it) {
                 lifecycleScope.launch {
                     Handler(Looper.getMainLooper()).postDelayed({
-                        binding.launchesList.layoutManager?.smoothScrollToPosition(binding.launchesList, RecyclerView.State(), 1)
-                    }, 350)
+                        binding.launchesList.layoutManager?.smoothScrollToPosition(binding.launchesList, RecyclerView.State(), 0)
+                    }, 150)
                 }
             }
+        }
+        viewModel.navigate.observe(viewLifecycleOwner) {
+            Log.d("XXX", "===== NAVIGATE =======")
+            findNavController().navigate(SpaceXFragmentDirections.actionSpacexFragmentToLaunchFragment("yololo"))
+//            findNavController().navigate(MoreFragmentDirections.actionMoreFragmentToHelpAndContactFragment())
         }
     }
 }

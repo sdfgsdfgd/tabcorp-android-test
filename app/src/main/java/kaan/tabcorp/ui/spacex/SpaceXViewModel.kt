@@ -5,9 +5,9 @@ import androidx.lifecycle.*
 import androidx.recyclerview.widget.DiffUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kaan.tabcorp.R
-import kaan.tabcorp.bindings.recyclerview.NegativeDiffCallback
 import kaan.tabcorp.data.models.LaunchItem
 import kaan.tabcorp.domain.spacex.SpacexRepository
+import kaan.tabcorp.utilities.SingleLiveEvent
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,17 +19,18 @@ class SpaceXViewModel @Inject constructor(private val spacexRepository: SpacexRe
     private val _filterSuccessfulLaunches = MutableLiveData<Boolean>(false)
     val filterSuccessfulLaunches: LiveData<Boolean> = _filterSuccessfulLaunches
 
-    val launches  = spacexRepository.launches.asLiveData()
+    private val _navigate = SingleLiveEvent<Unit>()
+    val navigate: LiveData<Unit> = _navigate
 
     // RecyclerView data
-    val assets = launches.map { launches ->
+    val assets = spacexRepository.launches.asLiveData().map { launches ->
         launches.sortedBy { it.date }
     }
     val assetsDiff: DiffUtil.ItemCallback<LaunchItem> = LaunchDiffUtil()
     val assetsLayoutProvider: (LaunchItem) -> Int = { if (portrait) R.layout.asset_item_portrait else R.layout.asset_item_landscape }
 
     init {
-        getLaunches()
+        fetchLaunches()
     }
 
     fun onFilterClicked() {
@@ -42,10 +43,16 @@ class SpaceXViewModel @Inject constructor(private val spacexRepository: SpacexRe
         this.portrait = isPortrait
     }
 
-    private fun getLaunches() {
+    private fun fetchLaunches() {
         viewModelScope.launch {
-            spacexRepository.getLaunches()
+            spacexRepository.getLaunches(::onLaunchClick)
         }
+    }
+
+    private fun onLaunchClick(launchItem: LaunchItem) {
+        Log.d("XXX", "Launch Clicked Description: ${launchItem.title}")
+
+        _navigate.value = Unit
     }
 }
 
