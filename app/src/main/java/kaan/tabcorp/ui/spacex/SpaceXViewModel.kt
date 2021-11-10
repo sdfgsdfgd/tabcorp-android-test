@@ -16,13 +16,16 @@ class SpaceXViewModel @Inject constructor(private val spacexRepository: SpacexRe
 
     private var portrait = false
 
+    private val _filterSuccessfulLaunches = MutableLiveData<Boolean>(false)
+    val filterSuccessfulLaunches: LiveData<Boolean> = _filterSuccessfulLaunches
+
     val launches  = spacexRepository.launches.asLiveData()
 
     // RecyclerView data
     val assets = launches.map { launches ->
         launches.sortedBy { it.date }
     }
-    val assetsDiff: DiffUtil.ItemCallback<LaunchItem> = NegativeDiffCallback()
+    val assetsDiff: DiffUtil.ItemCallback<LaunchItem> = LaunchDiffUtil()
     val assetsLayoutProvider: (LaunchItem) -> Int = { if (portrait) R.layout.asset_item_portrait else R.layout.asset_item_landscape }
 
     init {
@@ -30,7 +33,9 @@ class SpaceXViewModel @Inject constructor(private val spacexRepository: SpacexRe
     }
 
     fun onFilterClicked() {
-        Log.d("XXX", "============ filter clicked ============")
+        _filterSuccessfulLaunches.value = !filterSuccessfulLaunches.value!!
+
+        spacexRepository.toggleSuccessfulLaunches()
     }
 
     fun setPortraitOrientation(isPortrait: Boolean) {
@@ -42,4 +47,9 @@ class SpaceXViewModel @Inject constructor(private val spacexRepository: SpacexRe
             spacexRepository.getLaunches()
         }
     }
+}
+
+class LaunchDiffUtil : DiffUtil.ItemCallback<LaunchItem>() {
+    override fun areItemsTheSame(oldItem: LaunchItem, newItem: LaunchItem) = oldItem.id == newItem.id
+    override fun areContentsTheSame(oldItem: LaunchItem, newItem: LaunchItem) = oldItem.id == newItem.id
 }

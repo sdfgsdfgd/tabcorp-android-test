@@ -14,15 +14,33 @@ import javax.inject.Singleton
 
 @Singleton
 class SpacexRepository @Inject constructor(private val bffApi: BFFApi) {
-
+    private val _launchesAll = MutableStateFlow<List<LaunchItem>>(listOf())
     private val _launches = MutableStateFlow<List<LaunchItem>>(listOf())
     val launches = _launches.asStateFlow()
 
+    fun toggleSuccessfulLaunches() {
+        _launches.value =
+            if (_launches.value.any { it.success != true })
+                _launches.value.filterNot { it.success != true }
+            else
+                _launchesAll.value
+
+
+        Log.d("XXX", "_launchesAll contain fails ? [ ${_launchesAll.value.any { it.success == false}} ]")
+        Log.d("XXX", "_launches contain fails ? [ ${_launches.value.any { it.success == false}} ]")
+        Log.d("XXX", "launches contain fails ? [ ${launches.value.any { it.success == false}} ]")
+    }
+
     suspend fun getLaunches() = withContext(Dispatchers.IO) {
         try {
-            _launches.value = bffApi.getLaunches().mapToLaunchItems(sf)
+            _launchesAll.value = bffApi.getLaunches().mapToLaunchItems(sf).sortedBy { it.date }
+            _launches.value = _launchesAll.value.toMutableList()
         } catch (e: Exception) {
             Log.d("XXX", "Error retrieving launches: $e")
+        }
+
+        _launches.value.forEach {
+            Log.d("XXX", "----> [${it.id}]")
         }
     }
 

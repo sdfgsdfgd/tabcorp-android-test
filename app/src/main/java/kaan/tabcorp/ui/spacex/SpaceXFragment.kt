@@ -2,15 +2,20 @@ package kaan.tabcorp.ui.spacex
 
 import android.content.res.Configuration
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import kaan.tabcorp.R
 import kaan.tabcorp.databinding.FragmentSpacexFlightsBinding
+import kotlinx.coroutines.launch
 
 /**
  *  SpaceX grid/recyclerview [Fragment] subclass as the default destination in the navigation.
@@ -49,8 +54,14 @@ open class SpaceXFragment : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        viewModel.launches.observe(viewLifecycleOwner) {
-
+        viewModel.filterSuccessfulLaunches.observe(viewLifecycleOwner) {
+            if (!it) {
+                lifecycleScope.launch {
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        binding.launchesList.layoutManager?.smoothScrollToPosition(binding.launchesList, RecyclerView.State(), 1)
+                    }, 350)
+                }
+            }
         }
     }
 }

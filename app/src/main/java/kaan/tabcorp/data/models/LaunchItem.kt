@@ -6,6 +6,7 @@ import java.util.*
  * UI object for populating the list content views.
  */
 class LaunchItem(
+    val id: String,
     val title: String,
     val date: Date?,
     val success: Boolean?,
