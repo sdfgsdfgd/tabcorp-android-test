@@ -6,8 +6,8 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.databinding.BindingAdapter
 import com.squareup.picasso.Picasso
 import kaan.tabcorp.R
+import kaan.tabcorp.ui.spacex.LaunchItem
 import kaan.tabcorp.utilities.DateTimeUtils.toReadableDate
-import java.util.*
 
 @BindingAdapter("imageUrl")
 fun setImagePicasso(view: ImageView, url: String?) {
@@ -20,10 +20,6 @@ fun setImagePicasso(view: ImageView, url: String?) {
 fun setImageSuccess(view: ImageView, success: Boolean?) {
     success?.let {
         view.setImageDrawable(
-//            if (success)
-//                AppCompatResources.getDrawable(view.context, R.drawable.ic_success)
-//            else
-//                AppCompatResources.getDrawable(view.context, R.drawable.ic_fail)
             if (success == true)
                 AppCompatResources.getDrawable(view.context, R.drawable.ic_fortune_cat)
             else null
@@ -52,7 +48,9 @@ fun setSuccessText(view: TextView, success: Boolean?) {
 }
 
 @BindingAdapter("date")
-fun setDate(view: TextView, date: Date?) {
-    view.text = date?.toReadableDate() ?: view.context.getString(R.string.launch_text_date_unknown)
+fun setDate(view: TextView, launchItem: LaunchItem?) {
+    val dateText = launchItem?.date?.toReadableDate() ?: view.context.getString(R.string.launch_text_date_unknown)
+    val missionText = launchItem?.missionName.orEmpty()
+    view.text = view.context.getString(R.string.date_and_mission_text, dateText, missionText)
 }
 

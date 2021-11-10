@@ -1,7 +1,7 @@
 package kaan.tabcorp.data
 
-import kaan.tabcorp.data.models.LaunchResponse
 import kaan.tabcorp.data.models.LaunchDetails
+import kaan.tabcorp.data.models.LaunchResponse
 import kaan.tabcorp.data.models.RocketResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -23,7 +23,7 @@ interface SpaceXAPI {
         @Path("rocketId") rocketId: String,
     ): RocketResponse
 
-    companion object {
+    companion object {  // Endpoints for SpaceX, 1- All launches 2- One Launch 3- One Rocket
         private const val ENDPOINT_LAUNCHES: String = "v5/launches"
         private const val ENDPOINT_LAUNCH_DETAILS = "v3/launches/{launchId}"
         private const val ENDPOINT_ROCKET_DETAILS = "v4/rockets/{rocketId}"

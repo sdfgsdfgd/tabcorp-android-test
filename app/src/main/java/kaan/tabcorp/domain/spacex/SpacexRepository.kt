@@ -1,11 +1,11 @@
 package kaan.tabcorp.domain.spacex
 
-import android.util.Log
 import kaan.tabcorp.data.SpaceXAPI
 import kaan.tabcorp.data.models.LaunchDetails
 import kaan.tabcorp.ui.launch.RocketItem
 import kaan.tabcorp.ui.spacex.HeaderItem
 import kaan.tabcorp.ui.spacex.LaunchItem
+import kaan.tabcorp.ui.spacex.ListItem
 import kaan.tabcorp.utilities.DateTimeUtils.toYear
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,79 +18,69 @@ import javax.inject.Singleton
 
 @Singleton
 class SpacexRepository @Inject constructor(private val spaceXAPI: SpaceXAPI) {
-    private val _launchesAll = MutableStateFlow<List<LaunchItem>>(listOf())
-    private val _launches = MutableStateFlow<List<LaunchItem>>(listOf())
+    private val _launchesAll = MutableStateFlow<List<ListItem>>(listOf())       // Cache/stateflow of original items
+    private val _launches = MutableStateFlow<List<ListItem>>(listOf())          // Cache/stateflow of sorted/filtered items
     val launches = _launches.asStateFlow()
 
-    private val _isSortByDate = MutableStateFlow(true)
-    private val _isFilterSuccess = MutableStateFlow(false)
+    private val _isSortByDate = MutableStateFlow(true)          // Current active sorting:      date / mission first letter
+    private val _isFilterSuccess = MutableStateFlow(false)      // Current active filtering     show all / show only success
 
+
+    // Sort to current active sort setting
+    private fun List<ListItem>.sort() = if (_isSortByDate.value) dateSortYearGroup() else missionSortFirstLetterGroup()
+
+    // Sort by Mission  &  Group by Mission First Letter
+    private fun List<ListItem>.missionSortFirstLetterGroup() =
+        asSequence()
+            .filterIsInstance<LaunchItem>()
+            .sortedBy { it.missionName } //
+            .groupBy { it.missionName[0] }
+            .map { (missionNameLetter, launch) ->
+                mutableListOf(HeaderItem(missionNameLetter.toString())) + launch
+            }.flatten()
+
+    // Sort by Date  &  Group by Year
+    private fun List<ListItem>.dateSortYearGroup() =
+        asSequence()
+            .filterIsInstance<LaunchItem>()
+            .sortedBy { it.date }
+            .groupBy { it.date?.toYear() ?: 0 }
+            .map { (year, launch) ->
+                mutableListOf(HeaderItem(year.toString())) + launch
+            }.flatten()
+
+    /**
+     * Toggles displaying all launches or only the successful launches.
+     */
     suspend fun toggleSuccessfulLaunches() {
-        withContext(Dispatchers.Default) {
+        withContext(Dispatchers.IO) {
             _launches.value =
-                (if (!_isFilterSuccess.value)
-                    _launches.value.filterNot { it.success != true }
+                if (!_isFilterSuccess.value)
+                    _launches.value.filter { it is LaunchItem && it.success == true }.sort()
                 else
-                    _launchesAll.value)
+                    _launchesAll.value.sort()
+
             _isFilterSuccess.value = !_isFilterSuccess.value
         }
-        check()
     }
 
+    /**
+     * Toggles sorting by date or mission.
+     */
     suspend fun toggleSortingByDateOrMission() {
-        withContext(Dispatchers.Default) {  // Offload filtering / sorting operations to Default background thread.
-            if (_isSortByDate.value)
-                _launches.value = _launches.value
-                    .sortedBy { it.missionName } //.groupBy { }         // Group by first Letter
-                    .also {
-                        it.groupBy { it.missionName[0] }.map { (missionNameLetter, launch) ->
-
-                            listOf(HeaderItem(missionNameLetter.toString())) + launch
-
-//                            Log.d("XXXXXXXX", "Mission Name Letter: $missionNameLetter ${launch.map { Pair(it.missionName, it.date?.toYear()) }}")
-                        }.also {
-                            it.forEach { it.forEach {
-                                Log.d("YYYYYY", "-yyyyy--> ${(it as? LaunchItem)?.missionName ?: (it as? HeaderItem)?.text}")
-                            } }
-                        }
-                    }
-            else
-                _launches.value = _launches.value
-                    .sortedBy { it.date }
-                    .also {
-                        it.groupBy { it.date?.toYear() ?: 0 }.map { (year, launch) ->
-                            listOf(HeaderItem(year.toString())) + launch
-                        }
-                            .also {
-                                it.forEach {
-                                    it.forEach {
-                                        Log.d("YYYYYY", "-xxxxxxxxxxxxxxxxxxxxxxxx--> ${(it as? LaunchItem)?.missionName ?: (it as? HeaderItem)?.text}")
-                                    }
-                                }
-                            }
-                    }
-
+        withContext(Dispatchers.IO) {  // Offload filtering / sorting operations to Default background thread.
+            if (_isSortByDate.value) {  // Group everything by mission name letter
+                _launches.value = _launches.value.missionSortFirstLetterGroup()
+            } else                      // Group everything by year
+                _launches.value = _launches.value.dateSortYearGroup()
             _isSortByDate.value = !_isSortByDate.value
         }
-        check() //XXX todo REMOVE
     }
 
-    private fun check() {
-        Log.d("XXXXXX", "launchesAll contains fails: ${_launchesAll.value.any { it.success == false }}")
-        Log.d("XXXXXX", "launchesAll[0..3].success: ")
-        _launchesAll.value.subList(0, 3).forEach {
-            Log.d("XXXXXX", "------> ${it.id} - ${it.success}")
-        }
-        Log.d("XXXXXX", "launches[0..3].success: ")
-        _launches.value.subList(0, 3).forEach {
-            Log.d("XXXXXX", "------> ${it.id} - ${it.success}")
-        }
-        Log.d("XXXXXX", "launches contains fails: ${_launches.value.any { it.success == false }}")
-    }
-
+    // 1- The initial get all launches call - @SpaceXViewModel
     suspend fun getLaunches(onLaunchClick: (input: LaunchItem) -> Unit) = withContext(Dispatchers.IO) {
         try {
-            _launchesAll.value = spaceXAPI.getLaunches().mapToLaunchItems(sf, onLaunchClick).sortedBy { it.date }
+            _launchesAll.value = spaceXAPI.getLaunches().mapToLaunchItems(sf, onLaunchClick).sort()
             _launches.value = _launchesAll.value.toMutableList()
 
             _launchesAll.value.forEach {
@@ -100,6 +90,7 @@ class SpacexRepository @Inject constructor(private val spaceXAPI: SpaceXAPI) {
         }
     }
 
+    // 2- Get launch details call - @LaunchViewModel
     suspend fun getLaunchDetails(launchId: String): LaunchDetails? {
         return try {
             spaceXAPI.getLaunchDetails(launchId)
@@ -110,6 +101,7 @@ class SpacexRepository @Inject constructor(private val spaceXAPI: SpaceXAPI) {
         }
     }
 
+    // 3- Get rocket details call - @LaunchViewModel
     suspend fun getRocketDetails(rocketId: String): RocketItem? {
         return try {
             spaceXAPI.getRocketDetails(rocketId).mapToRocketItem()

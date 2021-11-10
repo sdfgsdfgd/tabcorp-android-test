@@ -8,8 +8,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.IntoSet
-import kaan.tabcorp.data.SpaceXAPI
 import kaan.tabcorp.data.RetrofitProvider
+import kaan.tabcorp.data.SpaceXAPI
 import okhttp3.Interceptor
 import retrofit2.Converter
 import retrofit2.Retrofit
@@ -46,7 +46,7 @@ object DataModule {
     ): Retrofit = RetrofitProvider(
         BASE_URL,
         converterFactory,
-        interceptors.toList() // listOf() // TODO      § interceptors.toList() §       enable for debugging
+        interceptors.toList()   // replace with listOf() to disable OkHttp debugging
     ).retrofit
 
     @Provides

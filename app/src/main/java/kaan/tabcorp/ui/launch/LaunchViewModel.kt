@@ -5,9 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kaan.tabcorp.data.models.LaunchDetails
-import kaan.tabcorp.data.models.LaunchResponse
 import kaan.tabcorp.domain.spacex.SpacexRepository
-import kaan.tabcorp.ui.spacex.LaunchItem
 import kaan.tabcorp.utilities.SingleLiveEvent
 import kotlinx.coroutines.launch
 import javax.inject.Inject

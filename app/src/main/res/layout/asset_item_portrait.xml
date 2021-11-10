@@ -44,7 +44,7 @@
 
         <TextView
             android:id="@+id/textview_date"
-            date="@{item.date}"
+            date="@{item}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"

@@ -4,7 +4,6 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,9 +18,8 @@ import kaan.tabcorp.R
 import kaan.tabcorp.databinding.FragmentSpacexFlightsBinding
 
 /**
- *  SpaceX
+ *  SpaceX - The main fragment containing the launch list.
  */
-
 @AndroidEntryPoint
 class SpaceXFragment : Fragment() {
     private lateinit var binding: FragmentSpacexFlightsBinding
@@ -58,7 +56,6 @@ class SpaceXFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         viewModel.filterSuccessfulLaunches.observe(viewLifecycleOwner) {
-            Log.d("XXXXXX", "-----------------------------------")
             Handler(Looper.getMainLooper()).postDelayed({
                 binding.launchesList.layoutManager?.scrollToPosition(0)
             }, 125)
@@ -67,7 +64,6 @@ class SpaceXFragment : Fragment() {
         }
 
         viewModel.sortClicked.observe(viewLifecycleOwner) {
-            Log.d("XXXXXX", "-----------------------------------")
             Handler(Looper.getMainLooper()).postDelayed({
                 binding.launchesList.layoutManager?.scrollToPosition(0)
             }, 125)

@@ -6,6 +6,7 @@ sealed class Result<out T> {
 
     data class Success<out T>(val data: T) : Result<T>()
     data class Error(val errorType: Throwable) : Result<Nothing>()
+
     fun successData(): T? {
         return (this as? Success)?.data
     }
