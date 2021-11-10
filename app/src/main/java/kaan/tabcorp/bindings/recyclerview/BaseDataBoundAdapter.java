@@ -13,9 +13,9 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LifecycleRegistry;
 import androidx.recyclerview.widget.RecyclerView;
 
-import kaan.tabcorp.BR;
-
 import java.util.List;
+
+import kaan.tabcorp.BR;
 
 public abstract class BaseDataBoundAdapter<T>
         extends RecyclerView.Adapter<DataBoundViewHolder>

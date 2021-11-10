@@ -5,10 +5,10 @@ import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.DiffUtil
 
 class SingleDataBoundListAdapter<T>(
-    items: LiveData<List<T>>,
-    @LayoutRes private val itemLayout: Int,
-    itemDiff: DiffUtil.ItemCallback<T>
-) : DataBoundListAdapter<T>(items, itemDiff, null) {
+        items: LiveData<List<T>>,
+        @LayoutRes private val itemLayout: Int,
+        itemDiff: DiffUtil.ItemCallback<T>
+) : DataBoundListAdapter<T>(items, itemDiff) {
 
     @LayoutRes
     override fun getItemLayoutId(position: Int): Int = itemLayout

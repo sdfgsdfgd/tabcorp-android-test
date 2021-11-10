@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
  *
  * It can be used for both single type lists and multiple type lists.
  *
- * Created by Kaan Osmanagaoglu on 2019-08-05.
+ * Created by Alex Chiviliov on 2019-08-05.
  *
  */
 abstract class DataBoundObservableListAdapter<T>(

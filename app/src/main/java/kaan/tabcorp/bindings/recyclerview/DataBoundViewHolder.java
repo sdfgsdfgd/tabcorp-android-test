@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 /**
  * A generic ViewHolder that wraps a generated ViewDataBinding class.
  *
- * Created by Kaan Osmanagaoglu on 2019-07-26.
+ * Created by Alex Chiviliov on 2019-07-26.
  * Based on https://github.com/google/android-ui-toolkit-demos/tree/master/DataBinding/DataBoundRecyclerView.
  *
  * Copyright (C) 2016 The Android Open Source Project
