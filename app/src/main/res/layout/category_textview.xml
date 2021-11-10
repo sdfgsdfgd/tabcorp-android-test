@@ -6,7 +6,7 @@
 
         <variable
             name="item"
-            type="kaan.tabcorp.data.models.LaunchItem" />
+            type="kaan.tabcorp.ui.spacex.LaunchItem" />
     </data>
 
     <LinearLayout

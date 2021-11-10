@@ -62,7 +62,8 @@ class SpaceXFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         viewModel.filterSuccessfulLaunches.observe(viewLifecycleOwner) {
-            if (!it) {
+            Log.d("XXXXXX", "==============")
+            if (it == false) {
                 lifecycleScope.launch {
                     Handler(Looper.getMainLooper()).postDelayed({
                         binding.launchesList.layoutManager?.smoothScrollToPosition(binding.launchesList, RecyclerView.State(), 0)
@@ -71,9 +72,7 @@ class SpaceXFragment : Fragment() {
             }
         }
         viewModel.navigate.observe(viewLifecycleOwner) {
-            Log.d("XXX", "===== NAVIGATE =======")
-            findNavController().navigate(SpaceXFragmentDirections.actionSpacexFragmentToLaunchFragment("yololo"))
-//            findNavController().navigate(MoreFragmentDirections.actionMoreFragmentToHelpAndContactFragment())
+            findNavController().navigate(SpaceXFragmentDirections.actionSpacexFragmentToLaunchFragment(it))
         }
     }
 }

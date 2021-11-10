@@ -1,6 +1,7 @@
 package kaan.tabcorp.data.models
 
 data class LaunchesResponse(
+    val rocket: String?,
     val auto_update: Boolean?,
     val capsules: List<String>?,
     val cores: List<Core>?,
@@ -19,7 +20,6 @@ data class LaunchesResponse(
     val name: String?,
     val net: Boolean?,
     val payloads: List<String>?,
-    val rocket: String?,
     val ships: List<Any>?,
     val static_fire_date_unix: Int?,
     val static_fire_date_utc: String?,

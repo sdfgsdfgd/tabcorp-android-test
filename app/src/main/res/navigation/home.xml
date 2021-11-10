@@ -24,10 +24,10 @@
         android:id="@+id/launchFragment"
         android:name="kaan.tabcorp.ui.launch.LaunchFragment"
         android:label="fragment_launch"
-        tools:layout="@layout/fragment_launch" >
+        tools:layout="@layout/fragment_launch">
         <argument
-            android:name="launchId"
-            app:argType="string" />
+            android:name="launchItem"
+            app:argType="kaan.tabcorp.ui.spacex.LaunchItem" />
     </fragment>
 
 </navigation>

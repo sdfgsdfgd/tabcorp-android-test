@@ -1,8 +1,8 @@
 package kaan.tabcorp.domain.spacex
 
-import android.util.Log
 import kaan.tabcorp.data.BFFApi
-import kaan.tabcorp.data.models.LaunchItem
+import kaan.tabcorp.ui.launch.RocketItem
+import kaan.tabcorp.ui.spacex.LaunchItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -30,15 +30,27 @@ class SpacexRepository @Inject constructor(private val bffApi: BFFApi) {
         try {
             _launchesAll.value = bffApi.getLaunches().mapToLaunchItems(sf, onLaunchClick).sortedBy { it.date }
             _launches.value = _launchesAll.value.toMutableList()
+
+            _launchesAll.value.forEach {
+            }
         } catch (e: Exception) {
-            Log.d("XXX", "Error retrieving launches: $e")
+            e.printStackTrace()
         }
+    }
 
 
+    suspend fun getLaunchDetails(launchId: String) {
+        bffApi.getLaunchDetails(launchId)
+    }
 
-//        _launches.value.forEach {
-//            Log.d("XXX", "----> [${it.id}]")
-//        }
+    suspend fun getRocketDetails(rocketId: String): RocketItem? {
+        return try {
+            bffApi.getRocketDetails(rocketId).mapToRocketItem()
+        } catch (e: Exception) {
+            e.printStackTrace()
+
+            null
+        }
     }
 
     companion object {

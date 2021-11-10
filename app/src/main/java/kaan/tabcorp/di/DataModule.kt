@@ -46,7 +46,7 @@ object DataModule {
     ): Retrofit = RetrofitProvider(
         BASE_URL,
         converterFactory,
-        listOf() // TODO      § interceptors.toList() §       enable for debugging
+        interceptors.toList() // listOf() // TODO      § interceptors.toList() §       enable for debugging
     ).retrofit
 
     @Provides

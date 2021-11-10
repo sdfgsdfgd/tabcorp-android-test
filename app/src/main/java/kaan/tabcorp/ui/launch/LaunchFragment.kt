@@ -1,7 +1,6 @@
 package kaan.tabcorp.ui.launch
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +10,7 @@ import androidx.hilt.navigation.fragment.hiltNavGraphViewModels
 import dagger.hilt.android.AndroidEntryPoint
 import kaan.tabcorp.R
 import kaan.tabcorp.databinding.FragmentLaunchBinding
+import kaan.tabcorp.ui.spacex.LaunchItem
 
 @AndroidEntryPoint
 class LaunchFragment : Fragment() {
@@ -34,7 +34,9 @@ class LaunchFragment : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
+        val argLaunchItem = requireArguments().getSerializable("launchItem") as LaunchItem
 
-        Log.d("XXX", " final checkpoint")
+        viewModel.queryRocketDetails(argLaunchItem.rocketId)
+        viewModel.queryLaunchDetails(argLaunchItem.rocketId)//todo
     }
 }

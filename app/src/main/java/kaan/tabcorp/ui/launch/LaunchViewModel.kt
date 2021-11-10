@@ -1,5 +1,6 @@
 package kaan.tabcorp.ui.launch
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -11,13 +12,33 @@ import javax.inject.Inject
 class LaunchViewModel @Inject constructor(private val spacexRepository: SpacexRepository) : ViewModel() {
 
     init {
-        queryLaunchDetails()
-        queryRocketDetails()
+//        queryRocketDetails("5e9d0d95eda69974db09d1ed")
+//        queryLaunchDetails()
     }
 
-    private fun getLaunches() {
+
+
+    fun queryRocketDetails(rocketId: String) {
         viewModelScope.launch {
-//            spacexRepository.getLaunches()
+            val rocket = spacexRepository.getRocketDetails(rocketId)
+
+
+
+            Log.d("XXXXX", "!!! ROCKET !!!")
+            Log.d("XXXXX", "${rocket?.name}")
+            Log.d("XXXXX", "${rocket?.type}")
+            Log.d("XXXXX", "${rocket?.active}")
+            Log.d("XXXXX", "${rocket?.boosters}")
+            Log.d("XXXXX", "${rocket?.country}")
+            Log.d("XXXXX", "${rocket?.description}")
         }
+    }
+
+
+    //      =============== todo =====================
+    fun queryLaunchDetails(launchId: String) {
+//        viewModelScope.launch {
+//            spacexRepository.getLaunchDetails(rocketId)
+//        }
     }
 }
