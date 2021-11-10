@@ -5,6 +5,7 @@
 # Architecture Overview
 The architecture consists of;
   - Moshi - ( JSON Parsing )
+  - Hilt - (Dependency Injection)
   - Coroutines, Coroutine Flows/StateFlows, LiveData, SingleLiveEvent
   - View Bindings, Data Bindings
   - Picasso - (Image retrieval)
