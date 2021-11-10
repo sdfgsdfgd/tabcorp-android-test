@@ -8,7 +8,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.IntoSet
-import kaan.tabcorp.data.BFFApi
+import kaan.tabcorp.data.SpaceXAPI
 import kaan.tabcorp.data.RetrofitProvider
 import okhttp3.Interceptor
 import retrofit2.Converter
@@ -51,5 +51,5 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun provideBFFApi(retrofit: Retrofit): BFFApi = retrofit.create(BFFApi::class.java)
+    fun provideSpaceXApi(retrofit: Retrofit): SpaceXAPI = retrofit.create(SpaceXAPI::class.java)
 }

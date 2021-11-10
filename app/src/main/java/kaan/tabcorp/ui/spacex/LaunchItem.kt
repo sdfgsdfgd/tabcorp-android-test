@@ -9,6 +9,7 @@ import java.util.*
 class LaunchItem(
     val id: String,
     val rocketId: String,
+    val flightNumber: Int?,
     val title: String,
     val date: Date?,
     val success: Boolean?,

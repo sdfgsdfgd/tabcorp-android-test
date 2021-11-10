@@ -1,6 +1,7 @@
 package kaan.tabcorp.domain.spacex
 
-import kaan.tabcorp.data.BFFApi
+import kaan.tabcorp.data.SpaceXAPI
+import kaan.tabcorp.data.models.LaunchDetails
 import kaan.tabcorp.ui.launch.RocketItem
 import kaan.tabcorp.ui.spacex.LaunchItem
 import kotlinx.coroutines.Dispatchers
@@ -13,7 +14,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class SpacexRepository @Inject constructor(private val bffApi: BFFApi) {
+class SpacexRepository @Inject constructor(private val spaceXAPI: SpaceXAPI) {
     private val _launchesAll = MutableStateFlow<List<LaunchItem>>(listOf())
     private val _launches = MutableStateFlow<List<LaunchItem>>(listOf())
     val launches = _launches.asStateFlow()
@@ -28,7 +29,7 @@ class SpacexRepository @Inject constructor(private val bffApi: BFFApi) {
 
     suspend fun getLaunches(onLaunchClick: (input: LaunchItem) -> Unit) = withContext(Dispatchers.IO) {
         try {
-            _launchesAll.value = bffApi.getLaunches().mapToLaunchItems(sf, onLaunchClick).sortedBy { it.date }
+            _launchesAll.value = spaceXAPI.getLaunches().mapToLaunchItems(sf, onLaunchClick).sortedBy { it.date }
             _launches.value = _launchesAll.value.toMutableList()
 
             _launchesAll.value.forEach {
@@ -38,14 +39,19 @@ class SpacexRepository @Inject constructor(private val bffApi: BFFApi) {
         }
     }
 
+    suspend fun getLaunchDetails(launchId: String): LaunchDetails? {
+        return try {
+            spaceXAPI.getLaunchDetails(launchId)
+        } catch (e: Exception) {
+            e.printStackTrace()
 
-    suspend fun getLaunchDetails(launchId: String) {
-        bffApi.getLaunchDetails(launchId)
+            null
+        }
     }
 
     suspend fun getRocketDetails(rocketId: String): RocketItem? {
         return try {
-            bffApi.getRocketDetails(rocketId).mapToRocketItem()
+            spaceXAPI.getRocketDetails(rocketId).mapToRocketItem()
         } catch (e: Exception) {
             e.printStackTrace()
 

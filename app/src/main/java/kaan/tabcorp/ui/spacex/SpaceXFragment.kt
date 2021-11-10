@@ -62,7 +62,6 @@ class SpaceXFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         viewModel.filterSuccessfulLaunches.observe(viewLifecycleOwner) {
-            Log.d("XXXXXX", "==============")
             if (it == false) {
                 lifecycleScope.launch {
                     Handler(Looper.getMainLooper()).postDelayed({

@@ -1,6 +1,9 @@
 package kaan.tabcorp.data.models
 
-data class LaunchesResponse(
+/**
+ * The default LaunchResponse class for the 'all launches' endpoint
+ */
+data class LaunchResponse(
     val rocket: String?,
     val auto_update: Boolean?,
     val capsules: List<String>?,
@@ -27,4 +30,11 @@ data class LaunchesResponse(
     val tdb: Boolean?,
     val upcoming: Boolean?,
     val window: Int?
+)
+
+/**
+ * 'one launch' response class for the spacex one launch endpoint
+ */
+data class LaunchDetails(
+    val details: String?
 )

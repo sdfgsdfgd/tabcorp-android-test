@@ -1,19 +1,20 @@
 package kaan.tabcorp.domain.spacex
 
 import kaan.tabcorp.ui.spacex.LaunchItem
-import kaan.tabcorp.data.models.LaunchesResponse
+import kaan.tabcorp.data.models.LaunchResponse
 import kaan.tabcorp.data.models.RocketResponse
 import kaan.tabcorp.ui.launch.RocketItem
 import java.text.SimpleDateFormat
 
 // SpaceX -   LaunchesResponse -> LaunchItems   mapper
-fun List<LaunchesResponse>.mapToLaunchItems(
+fun List<LaunchResponse>.mapToLaunchItems(
     formatting: SimpleDateFormat,
     onLaunchClick: (input: LaunchItem) -> Unit
 ) = this.map { response ->
     LaunchItem(
         response.id ?: kotlin.math.abs(Math.random().hashCode()).toString(),
         response.rocket ?: "",
+        response.flight_number,
         response.details ?: "",
         response.date_utc?.let { formatting.parse(it) },
         response.success,

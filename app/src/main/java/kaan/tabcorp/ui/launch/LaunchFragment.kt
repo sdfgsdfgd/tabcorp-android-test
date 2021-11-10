@@ -1,6 +1,7 @@
 package kaan.tabcorp.ui.launch
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,6 +38,15 @@ class LaunchFragment : Fragment() {
         val argLaunchItem = requireArguments().getSerializable("launchItem") as LaunchItem
 
         viewModel.queryRocketDetails(argLaunchItem.rocketId)
-        viewModel.queryLaunchDetails(argLaunchItem.rocketId)//todo
+        viewModel.queryLaunchDetails(argLaunchItem.flightNumber.toString())
+
+        viewModel.rocketDetails.observe(viewLifecycleOwner) {
+            binding.rocketHeadline.text = it.name
+        }
+
+        viewModel.launchDetails.observe(viewLifecycleOwner) {
+            binding.launchDetails.text = it?.details.orEmpty()
+            // XXX   binding. --------------- you're here
+        }
     }
 }

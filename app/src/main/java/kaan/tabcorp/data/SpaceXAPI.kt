@@ -1,37 +1,31 @@
 package kaan.tabcorp.data
 
-import kaan.tabcorp.data.models.LaunchesResponse
+import kaan.tabcorp.data.models.LaunchResponse
+import kaan.tabcorp.data.models.LaunchDetails
 import kaan.tabcorp.data.models.RocketResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-interface BFFApi {
-
-    // region Launches
+interface SpaceXAPI {
+    // SpaceX All Launches
     @GET(ENDPOINT_LAUNCHES)
-    suspend fun getLaunches(): List<LaunchesResponse>
-    // endregion
+    suspend fun getLaunches(): List<LaunchResponse>
 
-    // region Launch Details
+    // SpaceX Launch Details
     @GET(ENDPOINT_LAUNCH_DETAILS)
     suspend fun getLaunchDetails(
         @Path("launchId") launchId: String,
-//        @Body pumpRequest: LaunchDetailsRequest,
-    ): Any
+    ): LaunchDetails
 
+    // SpaceX Rocket Details
     @GET(ENDPOINT_ROCKET_DETAILS)
     suspend fun getRocketDetails(
         @Path("rocketId") rocketId: String,
-//        @Body pumpRequest: RocketDetailsRequest,
     ): RocketResponse
-    // endregion
 
     companion object {
         private const val ENDPOINT_LAUNCHES: String = "v5/launches"
-        private const val ENDPOINT_LAUNCH_DETAILS = "v4/launch"
+        private const val ENDPOINT_LAUNCH_DETAILS = "v3/launches/{launchId}"
         private const val ENDPOINT_ROCKET_DETAILS = "v4/rockets/{rocketId}"
-
-
-        private const val ENDPOINT_LAUNCH_NEXT: String = "launches/next"
     }
 }
